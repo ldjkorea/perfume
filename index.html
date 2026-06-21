@@ -11,7 +11,7 @@
 <meta name="apple-mobile-web-app-title" content="향수 공방">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='14'%20fill='%23F6F2E8'/%3E%3Ccircle%20cx='32'%20cy='32'%20r='21'%20fill='none'%20stroke='%233F5A3A'%20stroke-width='2.6'/%3E%3Cg%20stroke='%237C9A55'%20stroke-width='1.6'%20stroke-linecap='round'%3E%3Cline%20x1='32'%20y1='14'%20x2='32'%20y2='50'/%3E%3Cline%20x1='14'%20y1='32'%20x2='50'%20y2='32'/%3E%3Cline%20x1='19.7'%20y1='19.7'%20x2='44.3'%20y2='44.3'/%3E%3Cline%20x1='44.3'%20y1='19.7'%20x2='19.7'%20y2='44.3'/%3E%3C/g%3E%3Ccircle%20cx='32'%20cy='32'%20r='2.8'%20fill='%23CF9A3A'/%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='14'%20fill='%23F6F2E8'/%3E%3Ccircle%20cx='32'%20cy='32'%20r='21'%20fill='none'%20stroke='%233F5A3A'%20stroke-width='2.6'/%3E%3Cg%20stroke='%237C9A55'%20stroke-width='1.6'%20stroke-linecap='round'%3E%3Cline%20x1='32'%20y1='14'%20x2='32'%20y2='50'/%3E%3Cline%20x1='14'%20y1='32'%20x2='50'%20y2='32'/%3E%3Cline%20x1='19.7'%20y1='19.7'%20x2='44.3'%20y2='44.3'/%3E%3Cline%20x1='44.3'%20y1='19.7'%20x2='19.7'%20y2='44.3'/%3E%3C/g%3E%3Ccircle%20cx='32'%20cy='32'%20r='2.8'%20fill='%23CF9A3A'/%3E%3C/svg%3E">
-<link rel="manifest" href="data:application/json,%7B%22name%22%3A%22%ED%96%A5%EC%88%98%20%EA%B3%B5%EB%B0%A9%22%2C%22short_name%22%3A%22%ED%96%A5%EC%88%98%20%EA%B3%B5%EB%B0%A9%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23F6F2E8%22%2C%22theme_color%22%3A%22%233F5A3A%22%7D">
+<link rel="manifest" href="./manifest.json">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <style>
   :root{
@@ -1034,6 +1034,15 @@ $("#importFile").addEventListener("change", e=>{
 
 /* Initial */
 goHome();
+
+// === PWA 서비스 워커 등록 코드 추가 ===
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js')
+      .then(reg => console.log('서비스 워커 등록 성공!', reg))
+      .catch(err => console.error('서비스 워커 등록 실패:', err));
+  });
+}
 </script>
 </body>
 </html>
