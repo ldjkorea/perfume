@@ -11,7 +11,7 @@
 <meta name="apple-mobile-web-app-title" content="향수 공방">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='14'%20fill='%23F6F2E8'/%3E%3Ccircle%20cx='32'%20cy='32'%20r='21'%20fill='none'%20stroke='%233F5A3A'%20stroke-width='2.6'/%3E%3Cg%20stroke='%237C9A55'%20stroke-width='1.6'%20stroke-linecap='round'%3E%3Cline%20x1='32'%20y1='14'%20x2='32'%20y2='50'/%3E%3Cline%20x1='14'%20y1='32'%20x2='50'%20y2='32'/%3E%3Cline%20x1='19.7'%20y1='19.7'%20x2='44.3'%20y2='44.3'/%3E%3Cline%20x1='44.3'%20y1='19.7'%20x2='19.7'%20y2='44.3'/%3E%3C/g%3E%3Ccircle%20cx='32'%20cy='32'%20r='2.8'%20fill='%23CF9A3A'/%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='14'%20fill='%23F6F2E8'/%3E%3Ccircle%20cx='32'%20cy='32'%20r='21'%20fill='none'%20stroke='%233F5A3A'%20stroke-width='2.6'/%3E%3Cg%20stroke='%237C9A55'%20stroke-width='1.6'%20stroke-linecap='round'%3E%3Cline%20x1='32'%20y1='14'%20x2='32'%20y2='50'/%3E%3Cline%20x1='14'%20y1='32'%20x2='50'%20y2='32'/%3E%3Cline%20x1='19.7'%20y1='19.7'%20x2='44.3'%20y2='44.3'/%3E%3Cline%20x1='44.3'%20y1='19.7'%20x2='19.7'%20y2='44.3'/%3E%3C/g%3E%3Ccircle%20cx='32'%20cy='32'%20r='2.8'%20fill='%23CF9A3A'/%3E%3C/svg%3E">
-<link rel="manifest" href="./manifest.json">
+<link rel="manifest" href="data:application/json,%7B%22name%22%3A%22%ED%96%A5%EC%88%98%20%EA%B3%B5%EB%B0%A9%22%2C%22short_name%22%3A%22%ED%96%A5%EC%88%98%20%EA%B3%B5%EB%B0%A9%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23F6F2E8%22%2C%22theme_color%22%3A%22%233F5A3A%22%7D">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <style>
   :root{
@@ -404,6 +404,43 @@
   .cal-ics{background:var(--surface-2);border:1px solid var(--line);color:var(--leaf-deep);}
   .cal-note{margin:14px 2px 0;font-size:11.5px;color:var(--slate);line-height:1.5;}
 
+  /* Make (production picker) */
+  .make-intro{margin:2px 2px 16px;font-size:13px;color:var(--slate);line-height:1.55;}
+  .make-intro b{color:var(--leaf);font-weight:800;}
+  .make-list{display:flex;flex-direction:column;gap:9px;}
+  .make-row{display:flex;align-items:center;gap:11px;background:var(--surface);border:1px solid var(--line-soft);border-radius:var(--r-m);padding:13px 13px 13px 15px;box-shadow:var(--shadow);cursor:pointer;transition:transform .12s ease;}
+  .make-row:active{transform:scale(.99);}
+  .make-rmain{flex:1;min-width:0;}
+  .make-rname{font-size:15px;font-weight:800;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;letter-spacing:-0.01em;}
+  .make-rname .ver{margin-left:5px;}
+  .make-rmeta{font-size:12px;color:var(--slate);font-weight:600;margin-top:3px;}
+  .make-btn{flex:none;height:40px;padding:0 18px;border-radius:11px;background:linear-gradient(135deg,var(--leaf-soft),var(--leaf));color:#FBF8EF;font-size:14px;font-weight:800;transition:transform .12s ease;}
+  .make-btn:active{transform:scale(.94);}
+  .modal.make-modal{max-width:380px;}
+  .make-name{font-size:16px;font-weight:800;color:var(--ink);background:var(--surface-2);border:1px solid var(--line-soft);border-radius:11px;padding:11px 14px;margin-bottom:12px;letter-spacing:-0.01em;}
+  .make-go{width:100%;height:50px;margin-top:16px;border-radius:13px;background:linear-gradient(135deg,var(--leaf-soft),var(--leaf));color:#FBF8EF;font-size:15px;font-weight:800;transition:transform .12s ease;}
+  .make-go:active{transform:scale(.98);}
+
+  /* Batch detail */
+  .batch-head{margin-bottom:16px;}
+  .bh-name{font-size:21px;font-weight:800;color:var(--ink);letter-spacing:-0.02em;line-height:1.2;}
+  .bh-name .ver{margin-left:6px;vertical-align:middle;}
+  .bh-sub{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px;}
+  .bh-cat{font-size:11px;color:var(--leaf);font-weight:700;}
+  .batch-ings{display:flex;flex-direction:column;gap:0;}
+  .bi-row{display:flex;align-items:center;gap:10px;padding:11px 2px;border-bottom:1px solid var(--line-soft);}
+  .bi-row:last-child{border-bottom:none;}
+  .bi-name{flex:1;min-width:0;font-size:14.5px;font-weight:600;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .bi-note{flex:none;font-size:11px;font-weight:800;border-radius:7px;padding:3px 9px;}
+  .bi-note.n-top{background:#FBEFD4;color:#8A6212;}
+  .bi-note.n-middle{background:#E8F0DC;color:#4F6A33;}
+  .bi-note.n-base{background:#EFE2D4;color:#76512C;}
+  .bi-note.n-none{background:var(--paper-2);color:var(--muted);}
+  .bi-drops{flex:none;font-size:14px;font-weight:800;color:var(--leaf);min-width:54px;text-align:right;}
+  .bi-drops small{font-size:11px;font-weight:600;color:var(--slate);margin-left:2px;}
+  .bi-empty{font-size:13px;color:var(--slate);text-align:center;padding:12px;}
+  .batch-memo{font-size:14px;color:var(--ink);line-height:1.6;white-space:pre-wrap;}
+
   @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important;}}
 
   @media print{
@@ -449,14 +486,15 @@
       <h1>향수 공방</h1>
       <p class="tag">Parfumerie · Atelier</p>
     </div>
-    <div class="home-seg" id="homeSeg"><button data-m="library" class="on">조합법</button><button data-m="production">제작</button></div>
+    <div class="home-seg" id="homeSeg"><button data-m="library" class="on">조합법</button><button data-m="make">제작</button><button data-m="curing">숙성</button></div>
     <div id="homeLibrary">
       <button class="home-cta" id="homeCta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>새 조합 만들기</button>
       <div class="sec-label">분류 <button class="manage-link" id="manageBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>관리</button></div>
       <div class="cat-grid" id="catGrid"></div>
       <div id="recentWrap" style="display:none;"><div class="sec-label">최근 작업</div><div class="home-recent" id="recentList"></div></div>
     </div>
-    <div id="homeProduction" style="display:none;"></div>
+    <div id="homeMake" style="display:none;"></div>
+    <div id="homeCuring" style="display:none;"></div>
   </section>
 
   <!-- ===== LIST ===== -->
@@ -479,11 +517,6 @@
         <div class="field"><label>총 용량</label><div class="unit-wrap"><input class="inp" id="fVol" type="number" inputmode="decimal" min="0" step="1" value="30"><span class="unit">ml</span></div></div>
         <div class="field"><label>방울 환산 <span style="color:var(--muted);font-weight:500">(1ml당)</span></label><div class="unit-wrap"><input class="inp" id="fDpm" type="number" inputmode="numeric" min="1" step="1" value="20"><span class="unit">방울</span></div></div>
       </div>
-      <div class="date-row">
-        <div class="field"><label>제조일</label><input class="inp" id="fDate" type="date"></div>
-        <div class="field" style="max-width:148px;"><label>숙성 기간</label><div class="unit-wrap"><input class="inp" id="fMat" type="number" inputmode="numeric" min="0" step="1" value="30"><span class="unit">일</span></div></div>
-      </div>
-      <div class="mat-strip" id="matStrip"></div>
       <div class="field" style="margin-top:14px;">
         <label>베이스 (희석제)</label>
         <div class="seg" id="carrierSeg"><button data-c="향수 베이스" class="on">향수 베이스</button><button data-c="호호바 오일">호호바 오일</button><button data-c="__custom">직접 입력</button></div>
@@ -500,7 +533,30 @@
     <div class="block"><p class="block-label">메모</p><textarea class="inp" id="fMemo" placeholder="향의 느낌, 숙성 후 변화, 다음에 고칠 점 등"></textarea></div>
   </section>
 
+  <!-- ===== BATCH (production/curing detail) ===== -->
+  <section class="view" id="batchView">
+    <div class="block">
+      <div class="batch-head" id="batchHead"></div>
+      <div class="date-row">
+        <div class="field"><label>제작일</label><input class="inp" id="bDate" type="date"></div>
+        <div class="field" style="max-width:148px;"><label>숙성 기간</label><div class="unit-wrap"><input class="inp" id="bMat" type="number" inputmode="numeric" min="0" step="1"><span class="unit">일</span></div></div>
+      </div>
+      <div class="mat-strip" id="bMatStrip"></div>
+    </div>
+    <div class="readout" id="bReadout"><div class="ro-head">조합 분석</div><div id="bRoBody"></div></div>
+    <div class="block"><p class="block-label">향료 구성</p><div id="bIngList" class="batch-ings"></div></div>
+    <div class="block" id="bMemoBlock" style="display:none;"><p class="block-label">메모</p><div id="bMemo" class="batch-memo"></div></div>
+  </section>
+
   <button class="fab" id="fab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span id="fabLabel">새 향수</span></button>
+
+  <div class="actionbar" id="batchBar">
+    <div class="inner">
+      <button class="btn btn-primary" id="bCalBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="17" rx="2.5"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg>캘린더에 추가</button>
+      <button class="btn btn-icon label-btn" id="bLabelBtn" title="라벨"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4 12 22l-9-9V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="8" cy="8" r="1.4"/></svg></button>
+      <button class="btn btn-icon danger" id="bDelBtn" title="삭제"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg></button>
+    </div>
+  </div>
 
   <div class="actionbar" id="actionbar">
     <div class="inner">
@@ -538,6 +594,20 @@
   </div>
 </div>
 
+<!-- Make (start production) -->
+<div class="modal-bg" id="makeBg">
+  <div class="modal make-modal">
+    <div class="label-modal-head"><h3>제작 시작</h3><button class="label-x" id="makeClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+    <div class="make-name" id="makeName"></div>
+    <div class="date-row" style="margin-top:2px;">
+      <div class="field"><label>제작일</label><input class="inp" id="mDate" type="date"></div>
+      <div class="field" style="max-width:148px;"><label>숙성 기간</label><div class="unit-wrap"><input class="inp" id="mMat" type="number" inputmode="numeric" min="0" step="1" value="30"><span class="unit">일</span></div></div>
+    </div>
+    <div class="field" style="margin-top:13px;"><label>이번 배치 메모 (선택)</label><input class="inp" id="mMemo" placeholder="예: 2배 스케일, 알코올로 변경" autocomplete="off"></div>
+    <button class="make-go" id="makeGo">제작 시작 · 숙성 시작</button>
+  </div>
+</div>
+
 <!-- Calendar -->
 <div class="modal-bg" id="calBg">
   <div class="modal cal-modal">
@@ -567,7 +637,7 @@ const store = (() => {
   return { get(k){ try { return ok ? localStorage.getItem(k) : (mem[k] ?? null); } catch(e){ return mem[k] ?? null; } },
            set(k,v){ try { ok ? localStorage.setItem(k,v) : (mem[k]=v); } catch(e){ mem[k]=v; } } };
 })();
-const KEY="fragrance_recipes_v2", CATS_KEY="fragrance_cats_v1", HOUSE_KEY="fragrance_house_v1";
+const KEY="fragrance_recipes_v2", CATS_KEY="fragrance_cats_v1", HOUSE_KEY="fragrance_house_v1", BATCHES_KEY="fragrance_batches_v1";
 
 /* ---------- Config ---------- */
 const TYPES=["에센셜 오일","프래그런스 오일","압솔뤼","아로마 케미컬","팅크처","기타"];
@@ -634,8 +704,10 @@ function addDays(d,n){ const x=new Date(d); x.setDate(x.getDate()+n); return x; 
 /* ---------- Data ---------- */
 let recipes=loadRecipes();
 let cats=loadCats();
+let batches=loadBatches();
 let houseName=store.get(HOUSE_KEY)||"";
 let current=null, isNew=false, activeCat=cats[0]||"향수";
+let curBatch=null;
 
 function loadRecipes(){
   let arr=[]; try{ const r=JSON.parse(store.get(KEY)||"[]"); if(Array.isArray(r)) arr=r; }catch(e){}
@@ -650,6 +722,8 @@ function loadCats(){
 }
 function persist(){ store.set(KEY, JSON.stringify(recipes)); }
 function persistCats(){ store.set(CATS_KEY, JSON.stringify(cats)); }
+function loadBatches(){ let arr=[]; try{ const r=JSON.parse(store.get(BATCHES_KEY)||"[]"); if(Array.isArray(r)) arr=r; }catch(e){} return arr; }
+function persistBatches(){ store.set(BATCHES_KEY, JSON.stringify(batches)); }
 
 /* ---------- Calc ---------- */
 function recalc(r){
@@ -675,9 +749,9 @@ function renderHome(){
 function miniCard(r){
   const c=recalc(r); const td=c.totalDrops||1;
   const seg=["top","middle","base","none"].map(k=>{ const w=(c.noteDrops[k]/td)*100; if(w<=0)return ""; const col=k==="none"?"#D8CFB7":NOTE_COLOR[k]; return `<i style="width:${w}%;background:${col}"></i>`; }).join("");
-  const age=elapsedDays(r.madeDate); const showGrade=r.category==="향수"&&c.conc>0;
+  const showGrade=r.category==="향수"&&c.conc>0;
   return `<div class="card" data-id="${r.id}"><div class="card-top"><span class="card-name">${esc(r.name||"이름 없음")}</span><span class="ver">v${esc(r.version||"1")}</span></div>
-    <div class="card-meta">${showGrade?`<span class="chip grade">${TIERS[tierIndex(c.conc)].abbr} · <span class="num">${fmt(c.conc)}%</span></span>`:(c.conc>0?`<span class="chip grade"><span class="num">${fmt(c.conc)}%</span></span>`:``)}<span class="chip"><span class="num">${c.vol}</span>ml</span>${age!=null?`<span class="chip age">숙성 <span class="num">${age}</span>일차</span>`:``}</div>
+    <div class="card-meta">${showGrade?`<span class="chip grade">${TIERS[tierIndex(c.conc)].abbr} · <span class="num">${fmt(c.conc)}%</span></span>`:(c.conc>0?`<span class="chip grade"><span class="num">${fmt(c.conc)}%</span></span>`:``)}<span class="chip"><span class="num">${c.vol}</span>ml</span><span class="chip"><span class="num">${td===1&&c.totalDrops===0?0:c.totalDrops}</span>방울</span></div>
     <div class="mini-bar">${seg}</div>
     <div class="card-foot"><span class="card-cat">${esc(r.category)}</span><span class="card-date">${r.updatedAt?new Date(r.updatedAt).toLocaleDateString("ko-KR",{year:"2-digit",month:"2-digit",day:"2-digit"}):""}</span></div></div>`;
 }
@@ -706,7 +780,7 @@ function renderList(){
 }
 
 /* ---------- EDITOR ---------- */
-function blankRecipe(cat){ return { id:uid(), category:cat||cats[0]||"향수", name:"", version:"1", totalVolume:30, dropsPerMl:20, madeDate:todayStr(), maturationDays:30, carrier:"향수 베이스", carrierCustom:"", ingredients:[blankIng()], memo:"" }; }
+function blankRecipe(cat){ return { id:uid(), category:cat||cats[0]||"향수", name:"", version:"1", totalVolume:30, dropsPerMl:20, carrier:"향수 베이스", carrierCustom:"", ingredients:[blankIng()], memo:"" }; }
 function blankIng(){ return { id:uid(), name:"", type:TYPES[0], note:"", noteAuto:true, drops:"" }; }
 function renderCatSeg(){
   $("#catSeg").innerHTML = cats.map(c=>`<button class="cat-pill ${current.category===c?"on":""}" data-cat="${esc(c)}">${esc(c)}</button>`).join("")
@@ -720,11 +794,11 @@ function openEditor(id, presetCat){
   if(!cats.includes(current.category)) current.category=cats[0]||"향수";
   renderCatSeg();
   $("#fName").value=current.name||""; $("#fVer").value=current.version||"1"; $("#fVol").value=current.totalVolume ?? 30; $("#fDpm").value=current.dropsPerMl ?? 20;
-  $("#fDate").value=current.madeDate||todayStr(); $("#fMat").value=current.maturationDays ?? 30; $("#fMemo").value=current.memo||"";
+  $("#fMemo").value=current.memo||"";
   setCarrier(current.carrier||"향수 베이스"); $("#fCarrierCustom").value=current.carrierCustom||"";
   renderIngredients();
   $("#topTitle").textContent=isNew?("새 "+current.category):(current.name||"수정"); $("#delBtn").style.display=isNew?"none":"flex";
-  setMode("edit"); updateMaturation(); updateReadout();
+  setMode("edit"); updateReadout();
   if(isNew) setTimeout(()=>$("#fName").focus(),120);
 }
 function setCarrier(val){ const custom=(val!=="향수 베이스"&&val!=="호호바 오일"); document.querySelectorAll("#carrierSeg button").forEach(b=>{ const v=b.dataset.c; b.classList.toggle("on", custom?v==="__custom":v===val); }); $("#carrierCustom").classList.toggle("show", custom); current.carrier=custom?"__custom":val; }
@@ -748,43 +822,45 @@ function renderIngredients(){
   });
 }
 function refreshNoteUI(row,ing){ row.querySelectorAll(".note-seg button").forEach(b=> b.classList.toggle("on", b.dataset.note===ing.note)); row.querySelector(".auto-tag").classList.toggle("show", !!(ing.noteAuto&&ing.note)); }
-function updateMaturation(){
-  const dateStr=$("#fDate").value; const elapsed=elapsedDays(dateStr); const days=Math.max(0,Number($("#fMat").value)||0);
-  const strip=$("#matStrip");
-  if(!dateStr){ strip.className="mat-strip empty"; strip.innerHTML=`<span class="mat-age">제조일을 입력하면 숙성 일정이 표시돼요</span>`; return; }
-  const end=days>0?matEndFrom(dateStr,days):null;
-  const ageTxt=elapsed!=null?`숙성 ${elapsed}일차`:"오늘 제조";
+function renderMatStrip(stripSel, madeDate, days, onCal){
+  const strip=$(stripSel); const elapsed=elapsedDays(madeDate); days=Math.max(0,Number(days)||0);
+  if(!madeDate){ strip.className="mat-strip empty"; strip.innerHTML=`<span class="mat-age">제작일을 입력하면 숙성 일정이 표시돼요</span>`; return; }
+  const end=days>0?matEndFrom(madeDate,days):null;
+  const ageTxt=elapsed!=null?`숙성 ${elapsed}일차`:"오늘 제작";
   let stat, cls="mat-strip";
   if(end){ const dleft=daysUntil(end);
-    if(dleft>1){ stat=`종료 ${ymdDash(end)} · <b>D-${dleft}</b>`; }
-    else if(dleft===1){ stat=`종료 ${ymdDash(end)} · <b>D-1</b>`; }
+    if(dleft>=1){ stat=`종료 ${ymdDash(end)} · <b>D-${dleft}</b>`; }
     else if(dleft===0){ stat=`<b>오늘 숙성 완료</b> · 사용 가능`; cls+=" done"; }
     else { stat=`<b>숙성 완료</b> · ${ymdDash(end)}`; cls+=" done"; }
   } else { stat="숙성 기간 미설정"; }
   strip.className=cls;
   strip.innerHTML=`<div class="mat-main"><span class="mat-age">${ageTxt}</span><span class="mat-end">${stat}</span></div>`
-    + (end?`<button class="mat-cal" id="matCalBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="17" rx="2.5"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg>캘린더</button>`:``);
-  const b=$("#matCalBtn"); if(b) b.addEventListener("click", ()=>{ syncScalars(); openCalendar(current); });
+    + (end?`<button class="mat-cal" data-cal="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="17" rx="2.5"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg>캘린더</button>`:``);
+  const b=strip.querySelector("[data-cal]"); if(b&&onCal) b.addEventListener("click", onCal);
 }
-function syncScalars(){ current.name=$("#fName").value; current.version=$("#fVer").value; current.totalVolume=$("#fVol").value; current.dropsPerMl=$("#fDpm").value; current.madeDate=$("#fDate").value; current.maturationDays=$("#fMat").value; current.memo=$("#fMemo").value; if(current.carrier==="__custom") current.carrierCustom=$("#fCarrierCustom").value; }
-function updateReadout(){
-  syncScalars(); const c=recalc(current); const br=$("#baseRow"); const cname=carrierLabel(current);
-  if(c.over){ br.className="base-row over"; br.innerHTML=`<span class="bdot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></span><div class="bmain"><div class="bname">용량 초과</div><div class="bsub">향료 ${fmt(c.fragMl,2)}ml > 용량 ${c.vol}ml · 용량을 늘리거나 방울을 줄이세요</div></div><div class="bval">-${fmt(-c.carrierMl,1)}<small>ml</small></div>`; }
-  else { br.className="base-row"; br.innerHTML=`<span class="bdot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span><div class="bmain"><div class="bname">${esc(cname)}</div><div class="bsub">남은 용량을 자동으로 채워요</div></div><div class="bval">${fmt(c.carrierMl,1)}<small>ml</small></div>`; }
-  const body=$("#roBody");
-  if(c.totalDrops<=0){ body.innerHTML=`<div class="ro-empty">원료의 방울 수를 입력하면<br>농도·등급·노트 밸런스를 분석해드려요.</div>`; return; }
-  const td=c.totalDrops, isPerfume=current.category==="향수", conLabel=isPerfume?"부향률 (향료 비중)":"향료 농도";
+function syncScalars(){ current.name=$("#fName").value; current.version=$("#fVer").value; current.totalVolume=$("#fVol").value; current.dropsPerMl=$("#fDpm").value; current.memo=$("#fMemo").value; if(current.carrier==="__custom") current.carrierCustom=$("#fCarrierCustom").value; }
+function readoutInner(r){
+  const c=recalc(r);
+  if(c.totalDrops<=0) return `<div class="ro-empty">원료의 방울 수를 입력하면<br>농도·등급·노트 밸런스를 분석해드려요.</div>`;
+  const cname=carrierLabel(r);
+  const td=c.totalDrops, isPerfume=r.category==="향수", conLabel=isPerfume?"부향률 (향료 비중)":"향료 농도";
   const ti=tierIndex(c.conc);
   const gradeHead=isPerfume?`<div class="grade-name">${TIERS[ti].name}<span class="grade-abbr">${TIERS[ti].abbr}</span></div>`:"";
   let midBlock="";
   if(isPerfume){ midBlock=`<div class="ladder">`+TIERS.map((t,i)=>`<div class="ladder-row ${i===ti?"active":""}"><span class="ln">${t.name}<em>${t.abbr}</em></span><span class="lr">${t.range}</span></div>`).join("")+`</div>`; }
-  else if(REF_HINT[current.category]){ midBlock=`<div class="ref-hint">${REF_HINT[current.category]}</div>`; }
+  else if(REF_HINT[r.category]){ midBlock=`<div class="ref-hint">${REF_HINT[r.category]}</div>`; }
   const pyr=["top","middle","base"].map(k=>{ const p=(c.noteDrops[k]/td)*100; return `<div class="pyr-row"><span class="pyr-tag"><i style="background:${NOTE_COLOR[k]}"></i>${NOTE_KO[k]}</span><span class="pyr-track"><span class="pyr-fill" style="width:${p}%;background:${NOTE_COLOR[k]}"></span></span><span class="pyr-val">${fmt(p,0)}%</span></div>`; }).join("");
   const nonep=(c.noteDrops.none/td)*100, noneNote=nonep>0?`<em>미분류 ${fmt(nonep,0)}%</em>`:"";
   const bal=balanceReadout(c, td);
-  body.innerHTML=`<div class="conc-top"><div class="pct">${fmt(c.conc,1)}<small>%</small></div><div class="conc-meta"><div class="clbl">${conLabel}</div>${gradeHead}</div></div>${midBlock}
+  return `<div class="conc-top"><div class="pct">${fmt(c.conc,1)}<small>%</small></div><div class="conc-meta"><div class="clbl">${conLabel}</div>${gradeHead}</div></div>${midBlock}
     <div class="ro-split"><div class="ro-stat"><div class="k">향료</div><div class="v">${fmt(c.fragMl,2)}<small>ml</small></div></div><div class="ro-stat"><div class="k">${esc(cname)}</div><div class="v">${c.over?'<span style="color:#F2C9A8">초과</span>':fmt(c.carrierMl,1)+'<small>ml</small>'}</div></div><div class="ro-stat"><div class="k">총 방울</div><div class="v">${c.totalDrops}<small>방울</small></div></div></div>
     <div class="pyramid"><div class="pyr-title"><span>노트 밸런스 · 맞춤새</span>${noneNote}</div>${pyr}${bal}</div>`;
+}
+function updateReadout(){
+  syncScalars(); const c=recalc(current); const br=$("#baseRow"); const cname=carrierLabel(current);
+  if(c.over){ br.className="base-row over"; br.innerHTML=`<span class="bdot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></span><div class="bmain"><div class="bname">용량 초과</div><div class="bsub">향료 ${fmt(c.fragMl,2)}ml > 용량 ${c.vol}ml · 용량을 늘리거나 방울을 줄이세요</div></div><div class="bval">-${fmt(-c.carrierMl,1)}<small>ml</small></div>`; }
+  else { br.className="base-row"; br.innerHTML=`<span class="bdot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span><div class="bmain"><div class="bname">${esc(cname)}</div><div class="bsub">남은 용량을 자동으로 채워요</div></div><div class="bval">${fmt(c.carrierMl,1)}<small>ml</small></div>`; }
+  $("#roBody").innerHTML=readoutInner(current);
 }
 function balanceReadout(c, td){
   const t=(c.noteDrops.top/td)*100, m=(c.noteDrops.middle/td)*100, b=(c.noteDrops.base/td)*100;
@@ -806,17 +882,18 @@ function balanceReadout(c, td){
 /* ---------- Label ---------- */
 function notesByTier(r){ const g={top:[],middle:[],base:[]}; (r.ingredients||[]).forEach(i=>{ if(i.note && i.name && i.name.trim() && g[i.note]) g[i.note].push(i.name.trim()); }); return g; }
 function labelGradeLine(r,c){ if(c.conc<=0) return r.category==="향수"?"":esc(r.category); if(r.category==="향수"){ return `${TIERS[tierIndex(c.conc)].latin} · ${fmt(c.conc)}%`; } return `${esc(r.category)} · ${fmt(c.conc)}%`; }
-function buildLabel(r){
+function buildLabel(r, dateStr){
   const c=recalc(r); const house=(houseName||"").trim()||"PARFUMERIE"; const grade=labelGradeLine(r,c); const g=notesByTier(r);
   const tierRow=(lbl,arr)=> arr.length?`<div class="lab-note"><span class="lnk">${lbl}</span><span class="lnv">${arr.map(esc).join(" · ")}</span></div>`:"";
   const notesHtml=(g.top.length||g.middle.length||g.base.length)?`<div class="lab-notes">${tierRow("TOP",g.top)}${tierRow("HEART",g.middle)}${tierRow("BASE",g.base)}</div>`:"";
-  const dateTxt=r.madeDate?r.madeDate.replace(/-/g,"."):"";
+  const dateTxt=dateStr?dateStr.replace(/-/g,"."):"";
   return `<div class="lab-house">${esc(house)}</div><div class="lab-mark">${CITRUS_MARK}</div>
     <div class="lab-name">${esc(r.name||"이름 없음")}</div><div class="lab-ed">N°${esc(r.version||"1")}</div>
     ${grade?`<div class="lab-grade">${grade}</div>`:""}<div class="lab-rule"><i></i></div>${notesHtml}
-    <div class="lab-foot"><span>${c.vol} ML</span><span>${dateTxt}</span></div>`;
+    <div class="lab-foot"><span>${c.vol} ML</span>${dateTxt?`<span>${dateTxt}</span>`:`<span></span>`}</div>`;
 }
-function openLabel(){ if(!current) return; syncScalars(); $("#houseInput").value=houseName; $("#labelPaper").innerHTML=buildLabel(current); $("#labelBg").classList.add("show"); }
+function showLabel(r, dateStr){ $("#houseInput").value=houseName; $("#labelPaper").innerHTML=buildLabel(r, dateStr); $("#labelBg").dataset.r=JSON.stringify({r, dateStr}); $("#labelBg").classList.add("show"); }
+function openLabel(){ if(!current) return; syncScalars(); showLabel(current, null); }
 function closeLabel(){ $("#labelBg").classList.remove("show"); }
 
 /* ---------- Calendar ---------- */
@@ -856,42 +933,86 @@ function openCalendar(r){
 }
 function closeCalendar(){ $("#calBg").classList.remove("show"); }
 
-/* ---------- Production dashboard ---------- */
-function prodStatus(r){ const end=matEndDate(r); if(!end) return null; const d=daysUntil(end); if(d>=0) return {phase:"curing", end, dleft:d}; if(d>=-21) return {phase:"ready", end, dleft:d}; return null; }
-function renderProduction(){
-  const items=recipes.map(r=>({r,s:prodStatus(r)})).filter(x=>x.s);
-  const curing=items.filter(x=>x.s.phase==="curing").sort((a,b)=>a.s.dleft-b.s.dleft);
-  const ready=items.filter(x=>x.s.phase==="ready").sort((a,b)=>b.s.dleft-a.s.dleft);
-  const wrap=$("#homeProduction");
-  if(!items.length){ wrap.innerHTML=`<div class="empty"><div class="em-mark">${CITRUS_MARK}</div><h3>제작 중인 향수가 없어요</h3><p>조합법을 만들 때 제조일과 숙성 기간을<br>입력하면 여기에 숙성 일정이 표시돼요.</p></div>`; return; }
-  let html="";
-  if(curing.length){ html+=`<div class="sec-label">숙성 중 <span class="sec-count">${curing.length}</span></div>`+curing.map(x=>prodCard(x.r,x.s)).join(""); }
-  if(ready.length){ html+=`<div class="sec-label" style="margin-top:22px;">사용 가능 <span class="sec-count">${ready.length}</span></div>`+ready.map(x=>prodCard(x.r,x.s)).join(""); }
-  wrap.innerHTML=html;
-  wrap.querySelectorAll(".prod-card").forEach(el=> el.addEventListener("click", e=>{ if(e.target.closest(".prod-cal")) return; openEditor(el.dataset.id); }));
-  wrap.querySelectorAll(".prod-cal").forEach(el=> el.addEventListener("click", ()=>{ const r=recipes.find(x=>x.id===el.dataset.id); if(r) openCalendar(r); }));
+/* ---------- Make (start production from a recipe) ---------- */
+function renderMake(){
+  const wrap=$("#homeMake");
+  if(!recipes.length){ wrap.innerHTML=`<p class="make-intro">조합법을 골라 <b>제작</b>을 누르면 제작일·숙성 기간이 기록된 배치가 숙성 탭에 추가돼요.</p><div class="empty"><div class="em-mark">${CITRUS_MARK}</div><h3>조합법이 없어요</h3><p>먼저 조합법 탭에서<br>레시피를 만들어주세요.</p></div>`; return; }
+  const q=(wrap.dataset.q||"").trim().toLowerCase();
+  const list=recipes.slice().sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0)).filter(r=> !q || (r.name||"").toLowerCase().includes(q) || (r.category||"").toLowerCase().includes(q));
+  const rows=list.map(r=>{ const c=recalc(r); const grade=r.category==="향수"&&c.conc>0?`${TIERS[tierIndex(c.conc)].abbr} · ${fmt(c.conc)}%`:r.category; const nb=batches.filter(b=>b.recipeId===r.id).length;
+    return `<div class="make-row" data-id="${r.id}"><div class="make-rmain"><div class="make-rname">${esc(r.name||"이름 없음")} <span class="ver">v${esc(r.version||"1")}</span></div><div class="make-rmeta">${esc(grade)} · ${c.vol}ml${nb?` · 제작 ${nb}회`:""}</div></div><button class="make-btn" data-id="${r.id}">제작</button></div>`; }).join("");
+  wrap.innerHTML=`<p class="make-intro">조합법을 골라 <b>제작</b>을 누르면 제작일·숙성 기간이 기록된 배치가 숙성 탭에 추가돼요.</p>
+    <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><input type="search" id="makeSearch" placeholder="조합법 검색" autocomplete="off" value="${esc(q)}"></div>
+    <div class="make-list">${rows||`<div class="empty"><h3>검색 결과가 없어요</h3></div>`}</div>`;
+  const s=$("#makeSearch"); if(s) s.addEventListener("input", e=>{ wrap.dataset.q=e.target.value; renderMake(); const ns=$("#makeSearch"); if(ns){ ns.focus(); const v=ns.value; ns.setSelectionRange(v.length,v.length); } });
+  wrap.querySelectorAll(".make-row").forEach(el=> el.addEventListener("click", e=>{ if(e.target.closest(".make-btn")) return; openEditor(el.dataset.id); }));
+  wrap.querySelectorAll(".make-btn").forEach(el=> el.addEventListener("click", ()=> startMake(el.dataset.id)));
 }
-function prodCard(r,s){
-  const c=recalc(r); const total=Math.max(1,Number(r.maturationDays)||1); const made=new Date(r.madeDate+"T00:00:00");
+let makeRecipeId=null;
+function startMake(id){ const r=recipes.find(x=>x.id===id); if(!r) return; makeRecipeId=id; $("#makeName").textContent=`${r.name||"이름 없음"} · v${r.version||"1"}`; $("#mDate").value=todayStr(); $("#mMat").value="30"; $("#mMemo").value=""; $("#makeBg").classList.add("show"); }
+function closeMake(){ $("#makeBg").classList.remove("show"); }
+function createBatch(){
+  const r=recipes.find(x=>x.id===makeRecipeId); if(!r){ closeMake(); return; }
+  const made=$("#mDate").value||todayStr(); const days=Math.max(0,Number($("#mMat").value)||0);
+  batches.push({ id:uid(), recipeId:r.id, name:r.name, version:r.version, category:r.category, totalVolume:r.totalVolume, dropsPerMl:r.dropsPerMl, carrier:r.carrier, carrierCustom:r.carrierCustom, ingredients:JSON.parse(JSON.stringify(r.ingredients||[])), madeDate:made, maturationDays:days, memo:($("#mMemo").value||"").trim(), createdAt:Date.now() });
+  persistBatches(); closeMake(); toast("제작 시작 · 숙성 탭에 추가됐어요"); setHomeMode("curing");
+}
+
+/* ---------- Curing dashboard (made batches) ---------- */
+function curStatus(b){ const end=matEndDate(b); if(!end) return {phase:"none", end:null, dleft:null}; const d=daysUntil(end); return { phase: d>=0?"curing":"ready", end, dleft:d }; }
+function renderCuring(){
+  const wrap=$("#homeCuring");
+  if(!batches.length){ wrap.innerHTML=`<div class="empty"><div class="em-mark">${CITRUS_MARK}</div><h3>제작된 향수가 없어요</h3><p>제작 탭에서 조합법을 골라<br>제작을 시작하면 여기에 모여요.</p></div>`; return; }
+  const items=batches.map(b=>({b,s:curStatus(b)}));
+  const curing=items.filter(x=>x.s.phase!=="ready").sort((a,b)=>((a.s.dleft??1e9)-(b.s.dleft??1e9)));
+  const ready=items.filter(x=>x.s.phase==="ready").sort((a,b)=>b.s.dleft-a.s.dleft);
+  let html="";
+  if(curing.length){ html+=`<div class="sec-label">숙성 중 <span class="sec-count">${curing.length}</span></div>`+curing.map(x=>curCard(x.b,x.s)).join(""); }
+  if(ready.length){ html+=`<div class="sec-label" style="margin-top:22px;">사용 가능 <span class="sec-count">${ready.length}</span></div>`+ready.map(x=>curCard(x.b,x.s)).join(""); }
+  wrap.innerHTML=html;
+  wrap.querySelectorAll(".prod-card").forEach(el=> el.addEventListener("click", e=>{ if(e.target.closest(".prod-cal")) return; openBatch(el.dataset.id); }));
+  wrap.querySelectorAll(".prod-cal").forEach(el=> el.addEventListener("click", ()=>{ const b=batches.find(x=>x.id===el.dataset.id); if(b) openCalendar(b); }));
+}
+function curCard(b,s){
+  const c=recalc(b); const made=new Date(b.madeDate+"T00:00:00"); const total=Math.max(1,Number(b.maturationDays)||1);
   const elapsed=Math.min(total, Math.max(0, Math.round((Date.now()-made)/86400000)));
-  const pct=s.phase==="ready"?100:Math.max(2,Math.min(100,Math.round(elapsed/total*100)));
-  const grade=r.category==="향수"&&c.conc>0?`${TIERS[tierIndex(c.conc)].abbr} · ${fmt(c.conc)}%`:r.category;
-  const ddTxt=s.phase==="ready"?(s.dleft===0?"오늘 완료":"사용 가능"):(s.dleft===0?"오늘 완료":`D-${s.dleft}`);
-  const ddCls=s.phase==="ready"?"dd ready":"dd";
-  return `<div class="prod-card ${s.phase==="ready"?"is-ready":""}" data-id="${r.id}">
-    <div class="prod-top"><span class="prod-name">${esc(r.name||"이름 없음")}</span><span class="ver">v${esc(r.version||"1")}</span></div>
-    <div class="prod-meta"><span class="chip">${esc(grade)}</span><span class="prod-dates">${ymdDash(made)} → ${ymdDash(s.end)}</span></div>
+  const pct=s.phase==="ready"?100:(s.end?Math.max(2,Math.min(100,Math.round(elapsed/total*100))):0);
+  const grade=b.category==="향수"&&c.conc>0?`${TIERS[tierIndex(c.conc)].abbr} · ${fmt(c.conc)}%`:b.category;
+  const ddTxt=!s.end?"기간 미설정":(s.phase==="ready"?(s.dleft===0?"오늘 완료":"사용 가능"):(s.dleft===0?"오늘 완료":`D-${s.dleft}`));
+  const ddCls=s.phase==="ready"?"dd ready":"dd"; const endTxt=s.end?` → ${ymdDash(s.end)}`:"";
+  return `<div class="prod-card ${s.phase==="ready"?"is-ready":""}" data-id="${b.id}">
+    <div class="prod-top"><span class="prod-name">${esc(b.name||"이름 없음")}</span><span class="ver">v${esc(b.version||"1")}</span></div>
+    <div class="prod-meta"><span class="chip">${esc(grade)}</span><span class="prod-dates">${ymdDash(made)}${endTxt}</span></div>
     <div class="prod-bar-row"><div class="prod-bar"><i style="width:${pct}%"></i></div><span class="${ddCls}">${ddTxt}</span></div>
-    <button class="prod-cal" data-id="${r.id}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="17" rx="2.5"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg>캘린더에 추가</button>
+    <button class="prod-cal" data-id="${b.id}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="17" rx="2.5"/><path d="M3 9h18M8 2.5v4M16 2.5v4"/></svg>캘린더에 추가</button>
   </div>`;
 }
+
+/* ---------- Batch detail ---------- */
+function openBatch(id){
+  const b=batches.find(x=>x.id===id); if(!b) return; curBatch=b; const c=recalc(b);
+  const grade=b.category==="향수"&&c.conc>0?`${TIERS[tierIndex(c.conc)].name} · ${fmt(c.conc)}%`:b.category;
+  $("#batchHead").innerHTML=`<div class="bh-name">${esc(b.name||"이름 없음")} <span class="ver">v${esc(b.version||"1")}</span></div><div class="bh-sub"><span class="chip">${esc(grade)}</span><span class="chip"><span class="num">${c.vol}</span>ml</span><span class="bh-cat">${esc(b.category)}</span></div>`;
+  $("#bDate").value=b.madeDate||todayStr(); $("#bMat").value=b.maturationDays ?? 30;
+  $("#bRoBody").innerHTML=readoutInner(b);
+  $("#bIngList").innerHTML=(b.ingredients||[]).filter(i=>i.name&&i.name.trim()).map(i=>{ const note=i.note?`<span class="bi-note n-${i.note}">${NOTE_KO[i.note]}</span>`:`<span class="bi-note n-none">–</span>`; return `<div class="bi-row"><span class="bi-name">${esc(i.name)}</span>${note}<span class="bi-drops num">${fmt(Number(i.drops)||0,0)}<small>방울</small></span></div>`; }).join("")||`<div class="bi-empty">기록된 원료가 없어요</div>`;
+  if(b.memo){ $("#bMemoBlock").style.display="block"; $("#bMemo").textContent=b.memo; } else $("#bMemoBlock").style.display="none";
+  $("#topTitle").textContent=b.name||"제작";
+  renderMatStrip("#bMatStrip", b.madeDate, b.maturationDays, ()=>openCalendar(curBatch));
+  setMode("batch");
+}
+function syncBatchDates(){ if(!curBatch) return; curBatch.madeDate=$("#bDate").value; curBatch.maturationDays=$("#bMat").value; persistBatches(); renderMatStrip("#bMatStrip", curBatch.madeDate, curBatch.maturationDays, ()=>openCalendar(curBatch)); }
+function deleteBatch(){ if(!curBatch) return; batches=batches.filter(x=>x.id!==curBatch.id); persistBatches(); toast("제작 기록을 삭제했어요"); curBatch=null; setHomeMode("curing"); setMode("home"); }
+
 let homeMode="library";
 function setHomeMode(m){
   homeMode=m;
   $("#homeSeg").querySelectorAll("button").forEach(b=>b.classList.toggle("on", b.dataset.m===m));
   $("#homeLibrary").style.display = m==="library"?"block":"none";
-  $("#homeProduction").style.display = m==="production"?"block":"none";
-  if(m==="production") renderProduction();
+  $("#homeMake").style.display = m==="make"?"block":"none";
+  $("#homeCuring").style.display = m==="curing"?"block":"none";
+  if(m==="make") renderMake();
+  if(m==="curing") renderCuring();
 }
 
 /* ---------- Save / Dup / Delete ---------- */
@@ -909,9 +1030,9 @@ function saveCurrent(){
 function duplicateCurrent(){
   syncScalars(); const copy=JSON.parse(JSON.stringify(current)); copy.id=uid();
   const vn=parseFloat(copy.version); copy.version=isNaN(vn)?(copy.version+" copy"):String(vn+1);
-  copy.ingredients=copy.ingredients.map(x=>({...x,id:uid()})); copy.madeDate=todayStr();
-  current=copy; isNew=true; $("#fVer").value=current.version; $("#fDate").value=current.madeDate; $("#delBtn").style.display="none"; $("#topTitle").textContent="새 "+current.category;
-  updateMaturation(); updateReadout(); toast("복제했어요 · v"+current.version+"로 저장됩니다");
+  copy.ingredients=copy.ingredients.map(x=>({...x,id:uid()}));
+  current=copy; isNew=true; $("#fVer").value=current.version; $("#delBtn").style.display="none"; $("#topTitle").textContent="새 "+current.category;
+  updateReadout(); toast("복제했어요 · v"+current.version+"로 저장됩니다");
 }
 function deleteCurrent(){ const cat=current.category; recipes=recipes.filter(r=>r.id!==current.id); persist(); toast("삭제했어요"); openList(cats.includes(cat)?cat:(cats[0]||"향수")); }
 
@@ -947,11 +1068,12 @@ function deleteCategory(i){
 /* ---------- Mode ---------- */
 function setMode(mode){
   document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
-  $("#fab").classList.remove("show"); $("#actionbar").classList.remove("show");
+  $("#fab").classList.remove("show"); $("#actionbar").classList.remove("show"); $("#batchBar").classList.remove("show");
   const back=$("#backBtn"), brand=$("#brandMini"), ttl=$("#topTitle");
   if(mode==="home"){ $("#homeView").classList.add("active"); back.style.display="none"; brand.style.display="flex"; ttl.style.display="none"; }
   else if(mode==="list"){ $("#listView").classList.add("active"); back.style.display="flex"; brand.style.display="none"; ttl.style.display="block"; $("#fab").classList.add("show"); }
   else if(mode==="edit"){ $("#editView").classList.add("active"); back.style.display="flex"; brand.style.display="none"; ttl.style.display="block"; $("#actionbar").classList.add("show"); }
+  else if(mode==="batch"){ $("#batchView").classList.add("active"); back.style.display="flex"; brand.style.display="none"; ttl.style.display="block"; $("#batchBar").classList.add("show"); }
   window.scrollTo(0,0);
 }
 function goHome(){ renderHome(); setHomeMode(homeMode); setMode("home"); }
@@ -969,7 +1091,16 @@ $("#confOk").addEventListener("click",()=>{ $("#confirmBg").classList.remove("sh
 $("#homeCta").addEventListener("click", ()=> openEditor(null, activeCat));
 $("#fab").addEventListener("click", ()=> openEditor(null, activeCat));
 $("#homeSeg").querySelectorAll("button").forEach(b=> b.addEventListener("click", ()=> setHomeMode(b.dataset.m)));
-$("#fMat").addEventListener("input", updateMaturation);
+/* Make modal */
+$("#makeClose").addEventListener("click", closeMake);
+$("#makeBg").addEventListener("click", e=>{ if(e.target===$("#makeBg")) closeMake(); });
+$("#makeGo").addEventListener("click", createBatch);
+/* Batch view */
+$("#bDate").addEventListener("input", syncBatchDates);
+$("#bMat").addEventListener("input", syncBatchDates);
+$("#bCalBtn").addEventListener("click", ()=>{ if(curBatch) openCalendar(curBatch); });
+$("#bLabelBtn").addEventListener("click", ()=>{ if(curBatch) showLabel(curBatch, curBatch.madeDate); });
+$("#bDelBtn").addEventListener("click", ()=> confirmModal("제작 기록 삭제","이 제작(배치) 기록을 삭제해요. 조합법은 그대로 남아요.","삭제",true,deleteBatch));
 $("#calClose").addEventListener("click", closeCalendar);
 $("#calBg").addEventListener("click", e=>{ if(e.target===$("#calBg")) closeCalendar(); });
 $("#calGoogle").addEventListener("click", ()=>{ if(!calTarget) return; const u=gcalUrl(calTarget); if(!u){ toast("일정을 만들 수 없어요"); return; } try{ window.open(u,"_blank","noopener"); }catch(e){ location.href=u; } closeCalendar(); });
@@ -992,7 +1123,6 @@ $("#backBtn").addEventListener("click", ()=>{ if($("#editView").classList.contai
 $("#searchInput").addEventListener("input", renderList);
 $("#addIng").addEventListener("click", ()=>{ current.ingredients.push(blankIng()); renderIngredients(); const rows=$("#ingList").querySelectorAll(".ing"); rows[rows.length-1].querySelector(".ing-name").focus(); });
 ["#fName","#fVer","#fVol","#fDpm","#fCarrierCustom","#fMemo"].forEach(s=> $(s).addEventListener("input", updateReadout));
-$("#fDate").addEventListener("input", updateMaturation);
 document.querySelectorAll("#carrierSeg button").forEach(b=> b.addEventListener("click", ()=>{ const v=b.dataset.c; setCarrier(v==="__custom"?(current.carrierCustom||"베이스"):v); if(v==="__custom") setTimeout(()=>$("#fCarrierCustom").focus(),60); updateReadout(); }));
 $("#saveBtn").addEventListener("click", saveCurrent);
 $("#labelBtn").addEventListener("click", openLabel);
@@ -1003,17 +1133,17 @@ $("#delBtn").addEventListener("click", ()=> confirmModal("삭제할까요?",`'${
 $("#labelClose").addEventListener("click", closeLabel);
 $("#labelDone").addEventListener("click", closeLabel);
 $("#labelBg").addEventListener("click", e=>{ if(e.target===$("#labelBg")) closeLabel(); });
-$("#houseInput").addEventListener("input", e=>{ houseName=e.target.value; store.set(HOUSE_KEY, houseName); if(current) $("#labelPaper").innerHTML=buildLabel(current); });
+$("#houseInput").addEventListener("input", e=>{ houseName=e.target.value; store.set(HOUSE_KEY, houseName); try{ const ctx=JSON.parse($("#labelBg").dataset.r||"null"); if(ctx) $("#labelPaper").innerHTML=buildLabel(ctx.r, ctx.dateStr); }catch(err){} });
 $("#labelPrint").addEventListener("click", ()=>{ try{ window.print(); }catch(e){ toast("인쇄를 시작할 수 없어요"); } });
 
 /* Export / Import */
 $("#exportBtn").addEventListener("click", ()=>{
-  if(!recipes.length){ toast("내보낼 항목이 없어요"); return; }
-  const payload={ house:houseName, cats, recipes };
+  if(!recipes.length && !batches.length){ toast("내보낼 항목이 없어요"); return; }
+  const payload={ house:houseName, cats, recipes, batches };
   const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"}); const url=URL.createObjectURL(blob);
   const a=document.createElement("a"); const d=new Date(); const p=n=>String(n).padStart(2,"0");
   a.href=url; a.download=`향수노트-${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}.json`; a.click(); URL.revokeObjectURL(url);
-  toast(`${recipes.length}개를 백업했어요`);
+  toast(`조합법 ${recipes.length} · 제작 ${batches.length} 백업했어요`);
 });
 $("#importBtn").addEventListener("click", ()=> $("#importFile").click());
 $("#importFile").addEventListener("change", e=>{
@@ -1024,25 +1154,18 @@ $("#importFile").addEventListener("change", e=>{
       if(!incoming) throw 0;
       if(data && typeof data.house==="string" && !houseName){ houseName=data.house; store.set(HOUSE_KEY, houseName); }
       if(data && Array.isArray(data.cats)) data.cats.forEach(c=>{ if(c && !cats.includes(c)) cats.push(c); });
-      incoming.forEach(r=>{ if(!r||!r.id) return; if(!r.category) r.category="향수"; if(!r.madeDate) r.madeDate=todayStr(); if(!cats.includes(r.category)) cats.push(r.category); const i=recipes.findIndex(x=>x.id===r.id); if(i>=0) recipes[i]=r; else recipes.push(r); });
-      persist(); persistCats();
-      if($("#listView").classList.contains("active")){ renderCatStrip(); renderList(); } else if($("#homeView").classList.contains("active")) renderHome();
-      toast(`${incoming.length}개를 불러왔어요`);
+      incoming.forEach(r=>{ if(!r||!r.id) return; if(!r.category) r.category="향수"; if(!cats.includes(r.category)) cats.push(r.category); const i=recipes.findIndex(x=>x.id===r.id); if(i>=0) recipes[i]=r; else recipes.push(r); });
+      if(data && Array.isArray(data.batches)){ data.batches.forEach(b=>{ if(!b||!b.id) return; if(b.category && !cats.includes(b.category)) cats.push(b.category); const i=batches.findIndex(x=>x.id===b.id); if(i>=0) batches[i]=b; else batches.push(b); }); }
+      persist(); persistCats(); persistBatches();
+      if($("#homeView").classList.contains("active")) { renderHome(); setHomeMode(homeMode); }
+      else if($("#listView").classList.contains("active")){ renderCatStrip(); renderList(); }
+      toast(`조합법 ${incoming.length}개를 불러왔어요`);
     }catch(err){ toast("파일을 읽을 수 없어요"); } e.target.value=""; };
   reader.readAsText(file);
 });
 
 /* Initial */
 goHome();
-
-// === PWA 서비스 워커 등록 코드 추가 ===
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./service-worker.js')
-      .then(reg => console.log('서비스 워커 등록 성공!', reg))
-      .catch(err => console.error('서비스 워커 등록 실패:', err));
-  });
-}
 </script>
 </body>
 </html>
