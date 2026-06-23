@@ -4,7 +4,7 @@
    - 그 외 에셋(폰트/CSS/아이콘)은 캐시 우선 + 런타임 캐싱 → 오프라인 동작
    - activate에서 옛 캐시 정리
    큰 변경을 배포할 땐 아래 CACHE 값을 v4, v5... 로 올려주면 확실하게 갱신됩니다. */
-const CACHE = "fragrance-v3";
+const CACHE = "fragrance-v4";
 const PRELOAD = [
   "./",
   "./index.html",
