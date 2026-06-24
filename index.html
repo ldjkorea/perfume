@@ -343,6 +343,15 @@
   .cal-gcal{background:linear-gradient(135deg,var(--sapphire-soft),var(--sapphire));color:#fff;}
   .cal-ics{background:var(--surface-2);border:1px solid var(--line);color:var(--sapphire-deep);}
   .cal-note{margin:14px 2px 0;font-size:11.5px;color:var(--slate);line-height:1.5;}
+  .modal.sync-modal{max-width:380px;}
+  .sync-stat{font-size:12px;color:var(--slate);font-weight:600;margin:14px 2px 4px;min-height:16px;}
+  .sync-stat.busy{color:var(--sapphire);}
+  .sync-stat.err{color:var(--danger);}
+  .sync-actions{display:flex;gap:9px;margin-top:8px;}
+  .sync-actions .lbtn{flex:1;height:50px;border-radius:13px;font-size:14px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:7px;}
+  .sync-actions .lbtn svg{width:17px;height:17px;}
+  .sync-up{background:linear-gradient(135deg,var(--sapphire-soft),var(--sapphire));color:#fff;}
+  .sync-down{background:var(--surface-2);border:1px solid var(--line);color:var(--sapphire-deep);}
 
   /* Tags */
   .tag-wrap{display:flex;flex-wrap:wrap;gap:7px;margin-top:6px;}
@@ -439,6 +448,7 @@
     </div>
     <span class="ttl" id="topTitle"></span>
     <span class="spacer"></span>
+    <button class="ghost-btn" id="syncBtn" title="구글 시트 동기화"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 0 0 .5-8.97A6 6 0 0 0 6.2 9.4 3.5 3.5 0 0 0 6.5 19"/><path d="M12 12v7M9 16l3 3 3-3"/></svg></button>
     <button class="ghost-btn" id="exportBtn" title="백업 내보내기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13M7 9l5-5 5 5M5 21h14"/></svg></button>
     <button class="ghost-btn" id="importBtn" title="백업 가져오기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V3M7 10l5 5 5-5M5 21h14"/></svg></button>
     <input type="file" id="importFile" accept="application/json,.json" hidden>
@@ -584,6 +594,19 @@
   <h3 id="promptTitle"></h3>
   <input class="inp" id="promptInput" maxlength="20" autocomplete="off">
   <div class="modal-btns"><button class="m-cancel" id="promptCancel">취소</button><button class="m-ok sapphire" id="promptOk">추가</button></div>
+</div></div>
+
+<div class="modal-bg" id="syncBg"><div class="modal sync-modal">
+  <div class="label-modal-head"><h3>구글 시트 동기화</h3><button class="label-x" id="syncClose"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
+  <p class="mgr-help">Apps Script 웹앱 주소로 모든 데이터(제작법·연금·태그 등)를 클라우드에 저장하고 다른 기기에서 불러와요.</p>
+  <div class="field"><label>웹앱 URL</label><input class="inp" id="syncUrlInput" placeholder="https://script.google.com/macros/s/.../exec" autocomplete="off" autocapitalize="off"></div>
+  <div class="field" style="margin-top:12px;"><label>키 <span style="color:var(--muted);font-weight:500">(스크립트에 TOKEN 넣었을 때만)</span></label><input class="inp" id="syncKeyInput" placeholder="비워두면 키 검사 안 함" autocomplete="off"></div>
+  <div class="sync-stat" id="syncStat"></div>
+  <div class="sync-actions">
+    <button class="lbtn sync-up" id="syncSave"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V6M6 12l6-6 6 6"/></svg>시트에 저장</button>
+    <button class="lbtn sync-down" id="syncLoad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v13M6 12l6 6 6-6"/></svg>시트에서 불러오기</button>
+  </div>
+  <p class="cal-note">불러오기는 이 기기의 데이터를 시트 내용으로 덮어써요. 함께 받은 <b>perfume-apps-script.gs</b>를 Apps Script에 배포한 뒤 URL을 넣어주세요.</p>
 </div></div>
 
 <div class="modal-bg" id="confirmBg"><div class="modal">
@@ -1030,14 +1053,68 @@ $("#confCancel").addEventListener("click",()=>$("#confirmBg").classList.remove("
 $("#confirmBg").addEventListener("click",e=>{if(e.target===$("#confirmBg"))$("#confirmBg").classList.remove("show");});
 $("#confOk").addEventListener("click",()=>{$("#confirmBg").classList.remove("show");if(confirmAction)confirmAction();});
 
+/* SYNC (Google Sheets via Apps Script) */
+const SYNC_URL_KEY="fragrance_sync_url",SYNC_KEY_KEY="fragrance_sync_key",SYNC_AT_KEY="fragrance_sync_at";
+let syncUrl=store.get(SYNC_URL_KEY)||"",syncKey=store.get(SYNC_KEY_KEY)||"";
+function exportPayload(){return{house:houseName,cats,tags,types:customTypes,recipes,batches};}
+function applyPayload(d){
+  if(!d||typeof d!=="object")return false;
+  if(typeof d.house==="string")houseName=d.house;
+  if(Array.isArray(d.cats)&&d.cats.length)cats=d.cats.slice();
+  if(Array.isArray(d.tags))tags=d.tags.slice();
+  if(Array.isArray(d.types))customTypes=d.types.slice();
+  if(Array.isArray(d.recipes))recipes=d.recipes;
+  if(Array.isArray(d.batches))batches=d.batches;
+  recipes.forEach(r=>{if(!r.category)r.category="향수";if(r.alias===undefined)r.alias="";(r.ingredients||[]).forEach(i=>{if(i.noteAuto===undefined)i.noteAuto=!i.note;});if(!cats.includes(r.category))cats.push(r.category);});
+  batches.forEach(b=>{if(!b.tags)b.tags=[];if(b.alias===undefined)b.alias="";if(b.category&&!cats.includes(b.category))cats.push(b.category);});
+  store.set(HOUSE_KEY,houseName);persist();persistCats();persistBatches();persistTags();persistTypes();
+  return true;
+}
+function setSyncStat(msg,cls){const el=$("#syncStat");el.textContent=msg||(store.get(SYNC_AT_KEY)?("마지막 동기화 "+new Date(store.get(SYNC_AT_KEY)).toLocaleString("ko-KR")):"아직 동기화한 적 없어요");el.className="sync-stat"+(cls?" "+cls:"");}
+function openSync(){$("#syncUrlInput").value=syncUrl;$("#syncKeyInput").value=syncKey;setSyncStat();$("#syncBg").classList.add("show");}
+function closeSync(){$("#syncBg").classList.remove("show");}
+function readSyncInputs(){syncUrl=$("#syncUrlInput").value.trim();syncKey=$("#syncKeyInput").value.trim();store.set(SYNC_URL_KEY,syncUrl);store.set(SYNC_KEY_KEY,syncKey);}
+async function saveToSheet(){
+  readSyncInputs();
+  if(!syncUrl){setSyncStat("웹앱 URL을 먼저 입력해주세요","err");return;}
+  setSyncStat("저장 중…","busy");
+  try{
+    const res=await fetch(syncUrl,{method:"POST",body:JSON.stringify({key:syncKey,data:exportPayload()}),redirect:"follow"});
+    let j=null;try{j=await res.json();}catch(e){}
+    if(j&&j.ok===false)throw new Error(j.error||"server");
+    store.set(SYNC_AT_KEY,new Date().toISOString());setSyncStat();toast("구글 시트에 저장했어요");
+  }catch(err){setSyncStat("저장 실패 · URL/배포 권한(모든 사용자)·키를 확인해주세요","err");toast("저장 실패");}
+}
+async function loadFromSheet(){
+  readSyncInputs();
+  if(!syncUrl){setSyncStat("웹앱 URL을 먼저 입력해주세요","err");return;}
+  setSyncStat("불러오는 중…","busy");
+  try{
+    const sep=syncUrl.includes("?")?"&":"?";
+    const res=await fetch(syncUrl+sep+"key="+encodeURIComponent(syncKey),{redirect:"follow"});
+    const j=await res.json();
+    if(j&&j.ok===false)throw new Error(j.error||"server");
+    if(!j||!j.data){setSyncStat("시트에 저장된 데이터가 없어요","err");toast("시트가 비어있어요");return;}
+    closeSync();
+    confirmModal("시트에서 불러오기","이 기기의 데이터를 시트 내용으로 덮어써요. 진행할까요?","덮어쓰기",false,()=>{
+      if(applyPayload(j.data)){store.set(SYNC_AT_KEY,new Date().toISOString());goHome();toast("시트에서 불러왔어요");}
+      else toast("데이터 형식을 읽을 수 없어요");
+    });
+  }catch(err){setSyncStat("불러오기 실패 · URL/배포 권한·키를 확인해주세요","err");toast("불러오기 실패");}
+}
+
 $("#exportBtn").addEventListener("click",()=>{
   if(!recipes.length&&!batches.length){toast("내보낼 항목이 없어요");return;}
-  const payload={house:houseName,cats,tags,types:customTypes,recipes,batches};
-  const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a"),d=new Date(),p=n=>String(n).padStart(2,"0");
+  const blob=new Blob([JSON.stringify(exportPayload(),null,2)],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a"),d=new Date(),p=n=>String(n).padStart(2,"0");
   a.href=url;a.download=`향수노트-${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}.json`;a.click();URL.revokeObjectURL(url);
   toast(`제작법 ${recipes.length} · 연금 ${batches.length} 백업했어요`);
 });
 $("#importBtn").addEventListener("click",()=>$("#importFile").click());
+$("#syncBtn").addEventListener("click",openSync);
+$("#syncClose").addEventListener("click",closeSync);
+$("#syncBg").addEventListener("click",e=>{if(e.target===$("#syncBg"))closeSync();});
+$("#syncSave").addEventListener("click",saveToSheet);
+$("#syncLoad").addEventListener("click",loadFromSheet);
 $("#importFile").addEventListener("change",e=>{
   const file=e.target.files[0];if(!file)return;const reader=new FileReader();
   reader.onload=()=>{try{
